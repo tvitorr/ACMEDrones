@@ -1,15 +1,25 @@
 package br.com.acme.service;
 
-import java.time.LocalDate;
+import br.com.acme.model.Armazenamento;
+import br.com.acme.model.Entrega;
+
+import java.util.List;
 
 public class ServiceCliente {
 
-	public boolean consultaEntrega() {
-		return false;
-	}
+    private Armazenamento armazenamento;
 
-	public boolean consultaCobrancaMensal(LocalDate data) {
-		return false;
-	}
+    public ServiceCliente(Armazenamento armazenamento) {
+        this.armazenamento = armazenamento;
+    }
+
+    public List<Entrega> consultaEntrega(String nomeCliente) {
+        return armazenamento.getEntrega().stream().filter(e -> e.getCliente().getNome().equals(nomeCliente)).toList();
+
+    }
+
+    public long consultaCobrancaMensal(int ano, int mes) {
+        return armazenamento.getEntrega().stream().filter(e -> e.getAno() == ano).filter(e -> e.getMes() == mes).map(Entrega::getValorEmReais).count();
+    }
 
 }

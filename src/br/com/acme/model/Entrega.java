@@ -19,7 +19,9 @@ public abstract class Entrega {
 
     private Localizacao destino;
 
-    public Entrega(int numero, String descricao, LocalDate data, double peso, int situacao, Localizacao origem, Localizacao destino) {
+    private Cliente cliente;
+
+    public Entrega(int numero, String descricao, LocalDate data, double peso, int situacao, Localizacao origem, Localizacao destino, Cliente cliente) {
         this.numero = numero;
         this.descricao = descricao;
         this.data = data;
@@ -27,10 +29,23 @@ public abstract class Entrega {
         this.situacao = situacao;
         this.origem = origem;
         this.destino = destino;
+        this.cliente = cliente;
     }
 
     public double getPeso() {
         return peso;
+    }
+
+    public Cliente getCliente(){
+        return cliente;
+    }
+
+    public int getAno(){
+        return data.getYear();
+    }
+
+    public int getMes(){
+        return data.getMonthValue();
     }
 
     public double getDistanciaEmKm() {
