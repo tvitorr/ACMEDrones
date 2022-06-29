@@ -1,32 +1,50 @@
 package br.com.acme.service;
 
+import br.com.acme.model.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ServiceAdmin {
 
-	public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
-		return false;
-	}
+    private Armazenamento armazenamento;
 
-	public boolean cadastraDrone(int identificador, double cargaMaxima, int autonomiaKm) {
-		return false;
-	}
+    public ServiceAdmin(Armazenamento armazenamento) {
+        this.armazenamento = armazenamento;
+    }
 
-	public boolean cadastraCliente(String nome, String email, String senha) {
-		return false;
-	}
+    public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
+        armazenamento.addLocalizacao(new Localizacao(1, logradouro, latitude, longitude));
+        return false;
+    }
 
-	public boolean cadastraEntrega(int numero, String descricao, LocalDate data, double peso, int situacao) {
-		return false;
-	}
+    public boolean cadastraDrone(int identificador, double cargaMaxima, int autonomiaKm, Localizacao base) {
+        armazenamento.addDrone(new Drone(1, cargaMaxima, autonomiaKm, base));
+        return false;
+    }
 
-	public ArrayList consultaEntrega() {
-		return null;
-	}
+    public boolean cadastraCliente(String nome, String email, String senha, Localizacao endereco) {
+        armazenamento.addCliente(new Cliente(nome, email, senha, endereco));
+        return false;
+    }
 
-	public boolean inicializar() {
-		return false;
-	}
+    public boolean cadastraEntrega(int numero, String descricao, LocalDate data, double peso, int situacao,
+                                   boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade) {
+        if (isPerecivel) {
+            armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade));
+
+        } else {
+            armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, ""));
+        }
+        return false;
+    }
+
+    public ArrayList consultaEntrega() {
+        return armazenamento.getEntrega();
+    }
+
+    public boolean inicializar() {
+        return false;
+    }
 
 }

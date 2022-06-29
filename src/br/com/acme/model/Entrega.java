@@ -1,5 +1,6 @@
 package br.com.acme.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public abstract class Entrega {
@@ -8,7 +9,7 @@ public abstract class Entrega {
 
     private String descricao;
 
-    private Date data;
+    private LocalDate data;
 
     private double peso;
 
@@ -18,7 +19,7 @@ public abstract class Entrega {
 
     private Localizacao destino;
 
-    public Entrega(int numero, String descricao, Date data, double peso, int situacao, Localizacao origem, Localizacao destino) {
+    public Entrega(int numero, String descricao, LocalDate data, double peso, int situacao, Localizacao origem, Localizacao destino) {
         this.numero = numero;
         this.descricao = descricao;
         this.data = data;
