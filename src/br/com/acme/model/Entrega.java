@@ -33,7 +33,15 @@ public abstract class Entrega {
     }
 
     public double getDistanciaEmKm() {
-        return 0;
+        double firstLatToRad = Math.toRadians(origem.getLatitude());
+        double secondLatToRad = Math.toRadians(destino.getLatitude());
+
+
+        double deltaLongitudeInRad = Math.toRadians(destino.getLongitude()) - origem.getLongitude();
+
+        return Math.acos(Math.cos(firstLatToRad) * Math.cos(secondLatToRad) * Math.cos(deltaLongitudeInRad)
+                + Math.sin(firstLatToRad) * Math.sin(secondLatToRad)) * 6371;
+
     }
 
     public double getValorEmReais() {

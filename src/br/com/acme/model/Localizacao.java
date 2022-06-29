@@ -10,4 +10,11 @@ public class Localizacao {
 
 	private double longitude;
 
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
 }
