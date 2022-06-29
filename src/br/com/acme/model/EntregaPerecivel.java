@@ -13,7 +13,7 @@ public class EntregaPerecivel extends Entrega {
     }
 
     public double calculaValor() {
-        return getValorEmReais() * 0.01;
+        return getValorEmReais() + getValorEmReais() * 0.1;
     }
 
 }

@@ -45,7 +45,11 @@ public abstract class Entrega {
     }
 
     public int getMes(){
-        return data.getMonthValue();
+        return data.getMonthValue();}
+
+    public int getNumero() {
+        return numero;
+
     }
 
     public double getDistanciaEmKm() {
@@ -62,8 +66,8 @@ public abstract class Entrega {
 
     public double getValorEmReais() {
         double valorPesoEmReais = getPeso() * 20;
-        double valorDistanciaEmReias = getDistanciaEmKm() * 30;
-        return valorPesoEmReais + valorDistanciaEmReias;
+        double valorDistanciaEmReais = getDistanciaEmKm() * 30;
+        return valorPesoEmReais + valorDistanciaEmReais;
     }
 
     public double calculaValor() {
