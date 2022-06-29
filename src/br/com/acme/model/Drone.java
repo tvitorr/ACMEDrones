@@ -20,4 +20,12 @@ public class Drone {
 	public int getIdentificador() {
 		return identificador;
 	}
+
+	public double getCargaMaxima() {
+		return cargaMaxima;
+	}
+
+	public int getAutonomiaKm() {
+		return autonomiaKm;
+	}
 }

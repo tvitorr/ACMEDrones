@@ -2,6 +2,7 @@ package br.com.acme.service;
 
 import br.com.acme.model.*;
 
+import java.sql.ClientInfoStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,21 @@ public class ServiceAdmin {
         return verifica.isEmpty();
     }
 
-    public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
+    public boolean verificaEmail (String email) {
+        List<Cliente> verifica = armazenamento.getCliente().stream().filter(c -> c.getEmail().equals(email)).toList();
+        return verifica.isEmpty();
+    }
+
+    public boolean verificaEntrega (int numero) {
+        List<Entrega> verifica = armazenamento.getEntrega().stream().filter(c -> c.getNumero() == numero).toList();
+        return verifica.isEmpty();
+    }
+
+    public boolean buscaDrone (double peso, double distanciaEntrega) {
+        List<Drone> drones = armazenamento.getDrone().stream().filter(d -> d.)
+    }
+
+        public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
         if (verificaCodigo(codigo)) {
             System.out.println("Codigo ja existe no sistema.");
             return false;
@@ -45,16 +60,26 @@ public class ServiceAdmin {
     }
 
     public boolean cadastraCliente(String nome, String email, String senha, Localizacao endereco) {
-        armazenamento.addCliente(new Cliente(nome, email, senha, endereco));
-        return false;
+        if (verificaEmail(email)) {
+            System.out.println(("Email ja cadastrado no sistema."));
+            return false;
+        } else {
+            armazenamento.addCliente(new Cliente(nome, email, senha, endereco));
+            return true;
+        }
     }
 
     public boolean cadastraEntrega(int numero, String descricao, LocalDate data, double peso, int situacao,
                                    boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade) {
-        if (isPerecivel) {
+        if (verificaEntrega(numero)) {
+            System.out.println("Numero de entrega ja existe no sistema.");
+            return false;
+        }
+        else if ()
+        else if (isPerecivel) {
             armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade));
-
-        } else {
+        }
+        else if (!isPerecivel) {
             armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, ""));
         }
         return false;

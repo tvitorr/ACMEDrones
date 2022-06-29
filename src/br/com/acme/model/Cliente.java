@@ -16,4 +16,8 @@ public class Cliente {
 		this.senha = senha;
 		this.endereco = endereco;
 	}
+
+	public String getEmail() {
+		return email;
+	}
 }

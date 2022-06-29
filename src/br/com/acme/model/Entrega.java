@@ -33,6 +33,10 @@ public abstract class Entrega {
         return peso;
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
     public double getDistanciaEmKm() {
         double firstLatToRad = Math.toRadians(origem.getLatitude());
         double secondLatToRad = Math.toRadians(destino.getLatitude());
