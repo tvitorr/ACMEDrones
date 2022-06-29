@@ -10,4 +10,10 @@ public class Drone {
 
 	private Localizacao base;
 
+	public Drone(int identificador, double cargaMaxima, int autonomiaKm, Localizacao base) {
+		this.identificador = identificador;
+		this.cargaMaxima = cargaMaxima;
+		this.autonomiaKm = autonomiaKm;
+		this.base = base;
+	}
 }

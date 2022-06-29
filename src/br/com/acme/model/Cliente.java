@@ -10,4 +10,10 @@ public class Cliente {
 
 	private Localizacao endereco;
 
+	public Cliente(String nome, String email, String senha, Localizacao endereco) {
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.endereco = endereco;
+	}
 }

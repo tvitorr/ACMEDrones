@@ -10,6 +10,13 @@ public class Localizacao {
 
 	private double longitude;
 
+	public Localizacao(int codigo, String logradouro, double latitude, double longitude) {
+		this.codigo = codigo;
+		this.logradouro = logradouro;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
 	public double getLatitude() {
 		return latitude;
 	}
