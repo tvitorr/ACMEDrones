@@ -1,11 +1,22 @@
 package br.com.acme.model;
 
+import java.util.Date;
+
 public class EntregaNaoPerecivel extends Entrega {
 
-	private String descricaoMateriais;
+    private String descricaoMateriais;
 
-	public double calculaValor() {
-		return 0;
-	}
+    public EntregaNaoPerecivel(int numero, String descricao, Date data, double peso, int situacao, Localizacao origem, Localizacao destino, String descricaoMateriais) {
+        super(numero, descricao, data, peso, situacao, origem, destino);
+        this.descricaoMateriais = descricaoMateriais;
+    }
+
+    public String getDescricaoMateriais() {
+        return descricaoMateriais;
+    }
+
+    public double calculaValor() {
+        return getValorEmReais();
+    }
 
 }
