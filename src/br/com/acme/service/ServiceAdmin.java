@@ -4,6 +4,7 @@ import br.com.acme.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceAdmin {
 
@@ -13,28 +14,72 @@ public class ServiceAdmin {
         this.armazenamento = armazenamento;
     }
 
-    public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
-        armazenamento.addLocalizacao(new Localizacao(1, logradouro, latitude, longitude));
+    public boolean verificaCodigo (int codigo) {
+        List<Localizacao> verifica = armazenamento.getLocalizacao().stream().filter(c -> c.getCodigo() == codigo).toList();
+        return verifica.isEmpty();
+    }
+
+    public boolean verificaIdentificador (int identificador) {
+        List<Drone> verifica = armazenamento.getDrone().stream().filter(c -> c.getIdentificador() == identificador).toList();
+        return verifica.isEmpty();
+    }
+
+    public boolean verificaEmail (String email) {
+        List<Cliente> verifica = armazenamento.getCliente().stream().filter(c -> c.getEmail().equals(email)).toList();
+        return verifica.isEmpty();
+    }
+
+    public boolean verificaEntrega (int numero) {
+        List<Entrega> verifica = armazenamento.getEntrega().stream().filter(c -> c.getNumero() == numero).toList();
+        return verifica.isEmpty();
+    }
+
+    public boolean buscaDrone (double peso, double distanciaEntrega) {
+        //List<Drone> drones = armazenamento.getDrone().stream().filter()
         return false;
+    }
+
+        public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
+        if (verificaCodigo(codigo)) {
+            System.out.println("Codigo ja existe no sistema.");
+            return false;
+        } else {
+            armazenamento.addLocalizacao(new Localizacao(codigo, logradouro, latitude, longitude));
+            return true;
+        }
     }
 
     public boolean cadastraDrone(int identificador, double cargaMaxima, int autonomiaKm, Localizacao base) {
-        armazenamento.addDrone(new Drone(1, cargaMaxima, autonomiaKm, base));
-        return false;
+        if (verificaIdentificador(identificador)) {
+            System.out.println("Identificador ja existe no sistema.");
+            return false;
+        } else {
+            armazenamento.addDrone(new Drone(identificador, cargaMaxima, autonomiaKm, base));
+            return true;
+        }
     }
 
     public boolean cadastraCliente(String nome, String email, String senha, Localizacao endereco) {
-        armazenamento.addCliente(new Cliente(nome, email, senha, endereco));
-        return false;
+        if (verificaEmail(email)) {
+            System.out.println(("Email ja cadastrado no sistema."));
+            return false;
+        } else {
+            armazenamento.addCliente(new Cliente(nome, email, senha, endereco));
+            return true;
+        }
     }
 
     public boolean cadastraEntrega(int numero, String descricao, LocalDate data, double peso, int situacao,
-                                   boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade) {
-        if (isPerecivel) {
-            armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade));
-
-        } else {
-            armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, ""));
+                                   boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade,Cliente cliente) {
+        if (verificaEntrega(numero)) {
+            System.out.println("Numero de entrega ja existe no sistema.");
+            return false;
+        }
+        else if (isPerecivel) {
+            armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade,cliente));
+        }
+        else if (!isPerecivel) {
+            armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, "",cliente));
         }
         return false;
     }
