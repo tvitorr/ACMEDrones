@@ -2,7 +2,6 @@ package br.com.acme.service;
 
 import br.com.acme.model.*;
 
-import java.sql.ClientInfoStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,8 @@ public class ServiceAdmin {
     }
 
     public boolean buscaDrone (double peso, double distanciaEntrega) {
-        List<Drone> drones = armazenamento.getDrone().stream().filter(d -> d.)
+        //List<Drone> drones = armazenamento.getDrone().stream().filter()
+        return false;
     }
 
         public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
@@ -70,16 +70,16 @@ public class ServiceAdmin {
     }
 
     public boolean cadastraEntrega(int numero, String descricao, LocalDate data, double peso, int situacao,
-                                   boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade) {
+                                   boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade,Cliente cliente) {
         if (verificaEntrega(numero)) {
             System.out.println("Numero de entrega ja existe no sistema.");
             return false;
         }
         else if (isPerecivel) {
-            armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade));
+            armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade,cliente));
         }
         else if (!isPerecivel) {
-            armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, ""));
+            armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, "",cliente));
         }
         return false;
     }

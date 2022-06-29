@@ -20,6 +20,7 @@ public class Localizacao {
 	public int getCodigo() {
 		return codigo;
 	}
+	
 	public double getLatitude() {
 		return latitude;
 	}

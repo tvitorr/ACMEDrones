@@ -10,7 +10,7 @@ public class ACMEController {
 
     private Armazenamento armazenamento = new Armazenamento();
     private ServiceAdmin serviceAdmin = new ServiceAdmin(armazenamento);
-    private ServiceCliente serviceCliente = new ServiceCliente();
+    private ServiceCliente serviceCliente = new ServiceCliente(armazenamento);
 
     public ACMEController() {}
 
