@@ -75,7 +75,6 @@ public class ServiceAdmin {
             System.out.println("Numero de entrega ja existe no sistema.");
             return false;
         }
-        else if ()
         else if (isPerecivel) {
             armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade));
         }
