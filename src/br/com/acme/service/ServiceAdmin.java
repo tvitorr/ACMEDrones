@@ -4,6 +4,7 @@ import br.com.acme.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceAdmin {
 
@@ -13,14 +14,34 @@ public class ServiceAdmin {
         this.armazenamento = armazenamento;
     }
 
+    public boolean verificaCodigo (int codigo) {
+        List<Localizacao> verifica = armazenamento.getLocalizacao().stream().filter(c -> c.getCodigo() == codigo).toList();
+        return verifica.isEmpty();
+    }
+
+    public boolean verificaIdentificador (int identificador) {
+        List<Drone> verifica = armazenamento.getDrone().stream().filter(c -> c.getIdentificador() == identificador).toList();
+        return verifica.isEmpty();
+    }
+
     public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
-        armazenamento.addLocalizacao(new Localizacao(codigo, logradouro, latitude, longitude));
-        return false;
+        if (verificaCodigo(codigo)) {
+            System.out.println("Codigo ja existe no sistema.");
+            return false;
+        } else {
+            armazenamento.addLocalizacao(new Localizacao(codigo, logradouro, latitude, longitude));
+            return true;
+        }
     }
 
     public boolean cadastraDrone(int identificador, double cargaMaxima, int autonomiaKm, Localizacao base) {
-        armazenamento.addDrone(new Drone(identificador, cargaMaxima, autonomiaKm, base));
-        return false;
+        if (verificaIdentificador(identificador)) {
+            System.out.println("Identificador ja existe no sistema.");
+            return false;
+        } else {
+            armazenamento.addDrone(new Drone(identificador, cargaMaxima, autonomiaKm, base));
+            return true;
+        }
     }
 
     public boolean cadastraCliente(String nome, String email, String senha, Localizacao endereco) {

@@ -17,6 +17,9 @@ public class Localizacao {
 		this.longitude = longitude;
 	}
 
+	public int getCodigo() {
+		return codigo;
+	}
 	public double getLatitude() {
 		return latitude;
 	}
