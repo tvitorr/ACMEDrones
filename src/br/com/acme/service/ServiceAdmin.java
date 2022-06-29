@@ -14,32 +14,33 @@ public class ServiceAdmin {
         this.armazenamento = armazenamento;
     }
 
-    public boolean verificaCodigo (int codigo) {
+    public boolean verificaCodigo(int codigo) {
         List<Localizacao> verifica = armazenamento.getLocalizacao().stream().filter(c -> c.getCodigo() == codigo).toList();
         return verifica.isEmpty();
     }
 
-    public boolean verificaIdentificador (int identificador) {
+    public boolean verificaIdentificador(int identificador) {
         List<Drone> verifica = armazenamento.getDrone().stream().filter(c -> c.getIdentificador() == identificador).toList();
         return verifica.isEmpty();
     }
 
-    public boolean verificaEmail (String email) {
+    public boolean verificaEmail(String email) {
         List<Cliente> verifica = armazenamento.getCliente().stream().filter(c -> c.getEmail().equals(email)).toList();
         return verifica.isEmpty();
     }
 
-    public boolean verificaEntrega (int numero) {
+    public boolean verificaEntrega(int numero) {
         List<Entrega> verifica = armazenamento.getEntrega().stream().filter(c -> c.getNumero() == numero).toList();
         return verifica.isEmpty();
     }
 
-    public boolean buscaDrone (double peso, double distanciaEntrega) {
-        //List<Drone> drones = armazenamento.getDrone().stream().filter()
-        return false;
+    public boolean buscaDrone(double peso, double distanciaEntrega) {
+        List<Drone> drones = armazenamento.getDrone().stream().filter(d -> d.getAutonomiaKm() >= distanciaEntrega).
+                filter(d -> d.getCargaMaxima() >= peso).toList();
+        return drones.isEmpty();
     }
 
-        public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
+    public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
         if (verificaCodigo(codigo)) {
             System.out.println("Codigo ja existe no sistema.");
             return false;
@@ -70,16 +71,25 @@ public class ServiceAdmin {
     }
 
     public boolean cadastraEntrega(int numero, String descricao, LocalDate data, double peso, int situacao,
-                                   boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade,Cliente cliente) {
+                                   boolean isPerecivel, Localizacao origem, Localizacao destino, LocalDate validade, Cliente cliente) {
+
+        Entrega entrega = new Entrega(numero, descricao, data, peso, situacao, origem, destino, cliente) {
+            @Override
+            public double getDistanciaEmKm() {
+                return super.getDistanciaEmKm();
+            }
+        };
+
         if (verificaEntrega(numero)) {
             System.out.println("Numero de entrega ja existe no sistema.");
             return false;
-        }
-        else if (isPerecivel) {
-            armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade,cliente));
-        }
-        else if (!isPerecivel) {
-            armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, "",cliente));
+        } else if (buscaDrone(peso, entrega.getDistanciaEmKm())) {
+            System.out.println("Não temos drones disponiveis no momento");
+            return false;
+        } else if (isPerecivel) {
+            armazenamento.addEntrega(new EntregaPerecivel(numero, descricao, data, peso, situacao, origem, destino, validade, cliente));
+        } else if (!isPerecivel) {
+            armazenamento.addEntrega(new EntregaNaoPerecivel(numero, descricao, data, peso, situacao, origem, destino, "", cliente));
         }
         return false;
     }
