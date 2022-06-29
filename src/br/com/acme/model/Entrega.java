@@ -47,8 +47,8 @@ public abstract class Entrega {
 
     public double getValorEmReais() {
         double valorPesoEmReais = getPeso() * 20;
-        double valorDistanciaEmReias = getDistanciaEmKm() * 30;
-        return valorPesoEmReais + valorDistanciaEmReias;
+        double valorDistanciaEmReais = getDistanciaEmKm() * 30;
+        return valorPesoEmReais + valorDistanciaEmReais;
     }
 
     public double calculaValor() {

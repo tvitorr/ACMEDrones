@@ -14,12 +14,12 @@ public class ServiceAdmin {
     }
 
     public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
-        armazenamento.addLocalizacao(new Localizacao(1, logradouro, latitude, longitude));
+        armazenamento.addLocalizacao(new Localizacao(codigo, logradouro, latitude, longitude));
         return false;
     }
 
     public boolean cadastraDrone(int identificador, double cargaMaxima, int autonomiaKm, Localizacao base) {
-        armazenamento.addDrone(new Drone(1, cargaMaxima, autonomiaKm, base));
+        armazenamento.addDrone(new Drone(identificador, cargaMaxima, autonomiaKm, base));
         return false;
     }
 
