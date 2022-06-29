@@ -25,7 +25,7 @@ public class Drone {
 		return cargaMaxima;
 	}
 
-	public int getAutonomiaKm() {
+	public double getAutonomiaKm() {
 		return autonomiaKm;
 	}
 }
