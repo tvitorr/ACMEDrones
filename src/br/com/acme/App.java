@@ -25,37 +25,9 @@ public class App {
 
     public void exec() {
         logar();
-
-
-        logado.equals("admin") ? admin() : cliente();
+        if (logado.equals("admin")) admin();
         Scanner sc = new Scanner(System.in);
         int input = 10;
-
-
-        while (input != 0) {
-            System.out.println("INSIRA UMA DAS OPÇÕES ABAIXO:");
-            System.out.println("1 - Carregar dados");
-            System.out.println("2 - Classificar por data");
-            System.out.println("3 - Consultar todos os dados");
-            System.out.println("4 - Consultar dados de uma determinada data");
-            System.out.println("5 - Salvar arquivos de dados");
-            System.out.println("0 - Sair");
-            try {
-                input = sc.nextInt();
-                switch (input) {
-                    case 1 -> loadData();
-                    case 2 -> orderDate();
-                    case 3 -> displayAll();
-                    case 4 -> searchDate();
-                    case 5 -> saveData();
-                    case 0 -> System.out.println("Até mais");
-                    default -> System.out.println("Opção inválida");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Tipo errado de entrada");
-                sc.nextLine();
-            }
-        }
     }
 
     private void logar() {
@@ -101,7 +73,6 @@ public class App {
                     case 2 -> criaDrone();
                     case 3 -> criaCliente();
                     case 4 -> criaEntrega();
-                    case 5 -> saveData();
                     case 6 -> System.out.println("Ain't ready yet chief");
                     case 0 -> System.out.println("Até mais");
                     default -> System.out.println("Opção inválida");
@@ -215,7 +186,7 @@ public class App {
             }
 
 
-            serviceAdmin.cadastraCliente(nome, email, senha, temp.get(0));
+            //serviceAdmin.cadastraEntrega();
         }
         catch (InputMismatchException e) {
             System.out.println("Tipo errado de entrada");
