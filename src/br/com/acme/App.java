@@ -171,33 +171,54 @@ public class App {
     }
 
     public void criaEntrega(){
-        String descricao, email, senha;
-        int numero, situacao;
+        String descricao, email;
+        int numero, situacao, codOrigem, codDestino;
         double peso;
         boolean perecivel;
+        String tempo;
 
-        LocalDate data = null;
-        ArrayList<Localizacao> temp;
+        LocalDate data, validade = null;
+        ArrayList<Localizacao> temp, temp2;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Scanner sca = new Scanner(System.in);
-        System.out.println("Insira o numero");
-        numero = sca.nextInt();
-        System.out.println("Insira a descrição");
-        descricao = sca.nextLine();
-        System.out.println("Insira a data seguindo o formato 2022-12-28");
-        data = LocalDate.parse(sca.nextLine(), formatter);
-        System.out.println("Insira o peso");
-        peso = sca.nextDouble();
-        System.out.println("Insira a situação");
-        situacao = sca.nextInt();
-        System.out.println("É uma entrega perecível? 1 para sim ou 0 para não");
-         = sca.nextDouble();
+        try {
 
-        temp = serviceAdmin.verificaCodigo(codigoLocalizacao);
-        if (temp.isEmpty()) {
-            System.out.println("Nenhuma localização cadastrada com esse código");
-            return;
+            System.out.println("Insira o numero");
+            numero = sca.nextInt();
+            System.out.println("Insira a descrição");
+            descricao = sca.nextLine();
+            System.out.println("Insira a data seguindo o formato 2022-12-28");
+            data = LocalDate.parse(sca.nextLine(), formatter);
+            System.out.println("Insira o peso");
+            peso = sca.nextDouble();
+            System.out.println("Insira a situação");
+            situacao = sca.nextInt();
+            System.out.println("É uma entrega perecível? 1 para sim ou 0 para não");
+            tempo = sca.nextLine();
+            if (!tempo.equals("0") && !tempo.equals("1")) {
+                throw new InputMismatchException();
+            }
+            perecivel = tempo.equals("1");
+            System.out.println("Insira o código da localização origem");
+            codOrigem = sca.nextInt();
+            temp = serviceAdmin.verificaCodigo(codOrigem);
+            if (temp.isEmpty()) {
+                System.out.println("Nenhuma localização cadastrada com esse código");
+                return;
+            }
+            System.out.println("Insira o código da localização destino");
+            codDestino = sca.nextInt();
+            temp2 = serviceAdmin.verificaCodigo(codDestino);
+            if (temp2.isEmpty()) {
+                System.out.println("Nenhuma localização cadastrada com esse código");
+                return;
+            }
+
+
+            serviceAdmin.cadastraCliente(nome, email, senha, temp.get(0));
         }
-        serviceAdmin.cadastraCliente(nome, email, senha, temp.get(0));
+        catch (InputMismatchException e) {
+            System.out.println("Tipo errado de entrada");
+        }
     }
 }
