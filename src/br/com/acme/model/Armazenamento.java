@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Armazenamento {
 
-    private ArrayList<Localizacao> localizacao;
+    protected ArrayList<Localizacao> localizacao;
 
-    private ArrayList<Cliente> cliente;
+    protected ArrayList<Cliente> cliente;
 
-    private ArrayList<Entrega> entrega;
+    protected ArrayList<Entrega> entrega;
 
-    private ArrayList<Drone> drone;
+    protected ArrayList<Drone> drone;
 
     public Armazenamento() {
         localizacao = new ArrayList<Localizacao>();

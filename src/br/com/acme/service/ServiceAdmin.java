@@ -14,9 +14,8 @@ public class ServiceAdmin {
         this.armazenamento = armazenamento;
     }
 
-    public boolean verificaCodigo(int codigo) {
-        List<Localizacao> verifica = armazenamento.getLocalizacao().stream().filter(c -> c.getCodigo() == codigo).toList();
-        return verifica.isEmpty();
+    public ArrayList<Localizacao> verificaCodigo(int codigo) {
+        return armazenamento.getLocalizacao().stream().filter(c -> c.getCodigo() == codigo).toList();
     }
 
     public boolean verificaIdentificador(int identificador) {
@@ -41,7 +40,7 @@ public class ServiceAdmin {
     }
 
     public boolean cadastraLocal(int codigo, String logradouro, double latitude, double longitude) {
-        if (verificaCodigo(codigo)) {
+        if (!verificaCodigo(codigo).isEmpty()) {
             System.out.println("Codigo ja existe no sistema.");
             return false;
         } else {
@@ -50,7 +49,7 @@ public class ServiceAdmin {
         }
     }
 
-    public boolean cadastraDrone(int identificador, double cargaMaxima, int autonomiaKm, Localizacao base) {
+    public boolean cadastraDrone(int identificador, double cargaMaxima, double autonomiaKm, Localizacao base) {
         if (verificaIdentificador(identificador)) {
             System.out.println("Identificador ja existe no sistema.");
             return false;
